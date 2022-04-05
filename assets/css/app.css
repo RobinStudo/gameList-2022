@@ -1,3 +1,5 @@
+/* ----- Variables ----- */
+
 :root{
     --color-primary: #F2994A;
     --color-secondary: #F2C94C;
@@ -7,6 +9,7 @@
     --gradient: linear-gradient(to right, var(--color-primary), var(--color-secondary));
 }
 
+/* ----- Default ----- */
 *{
     box-sizing: border-box;
 }
@@ -27,6 +30,42 @@ a{
     color: inherit;
 }
 
+/* ----- Components ----- */
+.auto-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    gap: 20px;
+    justify-content: space-evenly;
+    margin: 20px;
+}
+
+.card{
+    height: 300px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    overflow: hidden;
+}
+
+.card .card-image{
+    object-fit: cover;
+    flex: 1;
+    overflow: hidden;
+}
+
+.card .card-title{
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.card h2{
+    margin: 0;
+}
+
+/* ----- Layout ----- */
 header{
     background: var(--gradient);
     color: var(--color-dark);

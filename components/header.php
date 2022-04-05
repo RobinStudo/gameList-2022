@@ -22,7 +22,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="#">
+                        <a href="/library.php">
                             Bibliothéque
                         </a>
                     </li>
