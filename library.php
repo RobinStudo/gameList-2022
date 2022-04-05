@@ -8,7 +8,7 @@ require_once './components/header.php';
 
 <div class="auto-grid">
     <?php foreach($games as $game){ ?>
-        <a href="#" class="card">
+        <a href="/single.php" class="card">
             <div class="card-badge">
                 <?php echo average($game['reviews']); ?>
             </div>
