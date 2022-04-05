@@ -13,7 +13,7 @@ require_once './components/header.php';
 
         <div class="card">
             <div class="card-badge">
-                <?php echo $average; ?>
+                <?php echo round($average, 1); ?>
             </div>
             <img src="<?php echo $game['poster']; ?>" alt="<?php echo $game['name']; ?>" class="card-image">
             <div class="card-title">
