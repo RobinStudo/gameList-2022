@@ -1,7 +1,7 @@
         </main>
 
         <footer>
-            GameList - Tous droits réservés 2022
+            GameList - Tous droits réservés <?php echo date('d/m/Y H:i') ?>
         </footer>
     </body>
 </html>
