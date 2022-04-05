@@ -1,9 +1,22 @@
 <?php
 require_once './components/data.php';
 require_once './components/functions.php';
-require_once './components/header.php';
 
-$game = $games[0];
+$id = $_GET['id'] ?? 0;
+
+foreach ($games as $gameData){
+    if($gameData['id'] == $id){
+        $game = $gameData;
+        break;
+    }
+}
+
+if(!isset($game)){
+    header('Location: /index.php');
+    die();
+}
+
+require_once './components/header.php';
 ?>
 
 <div class="game">

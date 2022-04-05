@@ -1,7 +1,7 @@
 <?php
 $games = [
     [
-        'id' => 1,
+        'id' => 10,
         'name' => 'Dying Light 2',
         'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi eos error fugit id, ipsum laboriosam laborum nostrum obcaecati pariatur perspiciatis, praesentium quia quidem quod quos rem rerum sapiente ullam voluptas.',
         'poster' => 'https://image.api.playstation.com/vulcan/img/rnd/202106/2908/7aJhOMuJALdBPqZHVy3CgJsg.png',
@@ -13,7 +13,7 @@ $games = [
         'reviews' => [7.5, 8, 4.3, 6],
     ],
     [
-        'id' => 2,
+        'id' => 11,
         'name' => 'Minecraft',
         'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi eos error fugit id, ipsum laboriosam laborum nostrum obcaecati pariatur perspiciatis, praesentium quia quidem quod quos rem rerum sapiente ullam voluptas.',
         'poster' => 'https://image.api.playstation.com/vulcan/img/cfn/11307x4B5WLoVoIUtdewG4uJ_YuDRTwBxQy0qP8ylgazLLc01PBxbsFG1pGOWmqhZsxnNkrU3GXbdXIowBAstzlrhtQ4LCI4.png',
