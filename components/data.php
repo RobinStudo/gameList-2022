@@ -46,6 +46,6 @@ $games = [
         'developer' => 'Electronic Arts',
         'category' => 'Sport',
         'platforms' => ['PC', 'Playstation 5', 'XBox Series'],
-        'reviews' => [1.4, 9.8],
+        'reviews' => [2, 8],
     ],
 ];

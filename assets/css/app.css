@@ -40,6 +40,7 @@ a{
 }
 
 .card{
+    position: relative;
     height: 300px;
     width: 300px;
     display: flex;
@@ -48,6 +49,16 @@ a{
     background-color: var(--color-light);
     color: var(--color-dark);
     overflow: hidden;
+}
+
+.card .card-badge{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px;
+    border-radius: 20px;
+    background-color: var(--color-light);
+    border: 2px solid var(--color-primary);
 }
 
 .card .card-image{
