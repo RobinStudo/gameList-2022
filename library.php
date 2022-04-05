@@ -1,5 +1,6 @@
 <?php
 require_once './components/data.php';
+require_once './components/functions.php';
 require_once './components/header.php';
 ?>
 
@@ -7,20 +8,16 @@ require_once './components/header.php';
 
 <div class="auto-grid">
     <?php foreach($games as $game){ ?>
-        <?php
-        $average = array_sum($game['reviews']) / count($game['reviews']);
-        ?>
-
-        <div class="card">
+        <a href="#" class="card">
             <div class="card-badge">
-                <?php echo round($average, 1); ?>
+                <?php echo average($game['reviews']); ?>
             </div>
             <img src="<?php echo $game['poster']; ?>" alt="<?php echo $game['name']; ?>" class="card-image">
             <div class="card-title">
                 <h2><?php echo $game['name']; ?></h2>
                 <span><?php echo $game['category']; ?></span>
             </div>
-        </div>
+        </a>
     <?php } ?>
 </div>
 
