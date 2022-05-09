@@ -44,6 +44,7 @@
 }
 
 .game .game-details aside{
+    margin-left: 10px;
     display: flex;
     flex-direction: column;
     gap: 5px;

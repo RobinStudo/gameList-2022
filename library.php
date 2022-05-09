@@ -18,7 +18,6 @@ SQL;
 
 $stmt = $db->query($query);
 $games = $stmt->fetchAll();
-$defaultPicture = 'https://www.onlylondon.properties/application/modules/themes/views/default/assets/images/image-placeholder.png';
 ?>
 
 <h1>Bibliothéque</h1>
@@ -32,7 +31,7 @@ $defaultPicture = 'https://www.onlylondon.properties/application/modules/themes/
                     <?php echo $game['counterRecommandation']; ?>
                 </div>
             <?php } ?>
-            <img src="<?php echo $game['poster'] ?? $defaultPicture; ?>" alt="<?php echo $game['title']; ?>" class="card-image">
+            <img src="<?php echo $game['poster'] ?? getDefaultGamePoster(); ?>" alt="<?php echo $game['title']; ?>" class="card-image">
             <div class="card-title">
                 <h2><?php echo $game['title']; ?></h2>
                 <span><?php echo $game['genre']; ?></span>
