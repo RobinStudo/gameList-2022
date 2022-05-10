@@ -25,6 +25,8 @@ function findGames(string $order = NULL, int $limit = NULL): array
 
     if($order === 'rand') {
         $query .= ' ORDER BY RAND()';
+    }else if($order === 'recommandation'){
+        $query .= ' ORDER BY counterRecommandation DESC';
     }
 
     if($limit !== NULL){
