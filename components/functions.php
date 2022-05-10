@@ -7,7 +7,7 @@ function average(array $array, int $precision = 1): float
 }
 
 // ----- Database Quieres -----
-function findGames(): array
+function findGames(string $order = NULL, int $limit = NULL): array
 {
     global $db;
 
@@ -20,10 +20,24 @@ function findGames(): array
             LEFT JOIN review ON game.id = review.game_id AND review.is_recommanded = 1
             LEFT JOIN game_genre ON game.id = game_genre.game_id
             LEFT JOIN genre ON game_genre.genre_id = genre.id
-        GROUP BY game.id;
+        GROUP BY game.id
     SQL;
 
-    $stmt = $db->query($query);
+    if($order === 'rand') {
+        $query .= ' ORDER BY RAND()';
+    }
+
+    if($limit !== NULL){
+        $query .= ' LIMIT :limit';
+    }
+
+    $stmt = $db->prepare($query);
+
+    if($limit !== NULL){
+        $stmt->bindValue('limit', $limit, PDO::PARAM_INT);
+    }
+
+    $stmt->execute();
     return $stmt->fetchAll();
 }
 
@@ -64,7 +78,6 @@ function findGame(int $id): ?array
 }
 
 // ----- Utils -----
-
 function getDefaultGamePoster(): string
 {
     return 'https://www.onlylondon.properties/application/modules/themes/views/default/assets/images/image-placeholder.png';
