@@ -2,28 +2,11 @@
 require_once './components/data.php';
 require_once './components/functions.php';
 require_once './components/header.php';
-
-$query = <<<SQL
-    SELECT 
-        game.id, game.title, game.poster, 
-        IFNULL(GROUP_CONCAT(genre.name SEPARATOR " - "), "Non connu") AS genre, 
-        COUNT(review.game_id) AS counterRecommandation 
-    FROM game
-        LEFT JOIN review ON game.id = review.game_id AND review.is_recommanded = 1
-        LEFT JOIN game_genre ON game.id = game_genre.game_id
-        LEFT JOIN genre ON game_genre.genre_id = genre.id
-    GROUP BY game.id;
-SQL;
-
-
-$stmt = $db->query($query);
-$games = $stmt->fetchAll();
 ?>
-
 <h1>Bibliothéque</h1>
 
 <div class="auto-grid">
-    <?php foreach($games as $game){ ?>
+    <?php foreach(findGames() as $game){ ?>
         <a href="/single.php?id=<?php echo $game['id']; ?>" class="card">
             <?php if($game['counterRecommandation'] >= 1){ ?>
                 <div class="card-badge">
