@@ -15,3 +15,7 @@
     margin: 0;
     font-size: 1.8rem;
 }
+
+section:not(.landing){
+    padding: 20px;
+}

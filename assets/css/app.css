@@ -72,6 +72,13 @@ a{
     border-radius: 20px;
 }
 
+.card .card-title h2{
+    text-overflow: ellipsis;
+    text-overflow-ellipsis: "...";
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .card h2{
     margin: 0;
 }
@@ -112,6 +119,58 @@ header aside a:first-child{
 
 main{
     flex: 1;
+}
+
+.button{
+    border: none;
+    padding: 8px 15px;
+    font-size: 1.2rem;
+    background-color: var(--color-primary);
+    border-radius: 5px;
+}
+
+.form-field{
+    margin-bottom: 20px;
+}
+
+.form-field label{
+    width: 100%;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.form-field input[type="text"], .form-field textarea{
+    border: none;
+    padding: 10px;
+    width: 100%;
+    resize: vertical;
+}
+
+.form-field input[type="checkbox"]{
+    display: none;
+}
+
+.form-field input[type="checkbox"] + label:before{
+    content: "";
+    border: 2px solid var(--color-light);
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    font-family: "Font Awesome 5 Free", sans-serif;
+    font-weight: 900;
+    vertical-align: bottom;
+    margin-right: 5px;
+    color: var(--color-primary);
+}
+
+.form-field input[type="checkbox"]:checked + label:before{
+    content: "\f00c";
+}
+
+.form-actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 footer{

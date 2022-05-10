@@ -52,6 +52,27 @@ require_once './components/header.php';
             </div>
         </aside>
     </div>
+
+    <section>
+        <h2>Laisser votre avis</h2>
+
+        <form method="post">
+            <div class="form-field">
+                <input type="checkbox" name="is_recommanded" id="isRecommandedInput">
+                <label for="isRecommandedInput">Recommendez vous ce jeu ?</label>
+            </div>
+
+            <div class="form-field">
+                <label for="commentInput">Votre commentaire</label>
+                <textarea name="comment" id="commentInput" rows="10"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button class="button">Publier</button>
+            </div>
+        </form>
+    </section>
+
 </div>
 
 <?php
