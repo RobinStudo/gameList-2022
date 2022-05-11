@@ -10,6 +10,28 @@ if(!$game){
     die();
 }
 
+$errors = [];
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $review = [];
+
+    $review['isRecommanded'] = isset($_POST['is_recommanded']);
+
+    if(strlen($_POST['comment']) > 10 && strlen($_POST['comment']) < 500){
+        $review['comment'] = htmlspecialchars($_POST['comment']);
+    }else{
+        $errors[] = 'Votre commentaire doit contenir entre 10 et 500 caractères';
+    }
+
+    if(count($errors) === 0){
+        $review['gameId'] = $game['id'];
+        $review['userId'] = 1; // TODO - Récupérer l'ID de l'utilisateur connecté
+        
+        if(!insertReview($review)){
+            $errors[] = 'Une erreur inconnue est survenue, veuillez réessayer ultérieurement';
+        }
+    }
+}
+
 require_once './components/header.php';
 ?>
 
@@ -57,6 +79,12 @@ require_once './components/header.php';
         <h2>Laisser votre avis</h2>
 
         <form method="post">
+            <ul class="form-errors">
+                <?php foreach($errors as $error){ ?>
+                    <li><?php echo $error; ?></li>
+                <?php } ?>
+            </ul>
+
             <div class="form-field">
                 <input type="checkbox" name="is_recommanded" id="isRecommandedInput">
                 <label for="isRecommandedInput">Recommendez vous ce jeu ?</label>

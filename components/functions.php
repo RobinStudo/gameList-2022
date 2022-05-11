@@ -15,7 +15,7 @@ function findGames(string $order = NULL, int $limit = NULL): array
         SELECT 
             game.id, game.title, game.poster, 
             IFNULL(GROUP_CONCAT(genre.name SEPARATOR " - "), "Non connu") AS genre, 
-            COUNT(review.game_id) AS counterRecommandation 
+            COUNT(DISTINCT review.game_id) AS counterRecommandation 
         FROM game
             LEFT JOIN review ON game.id = review.game_id AND review.is_recommanded = 1
             LEFT JOIN game_genre ON game.id = game_genre.game_id
@@ -54,7 +54,7 @@ function findGame(int $id): ?array
             company_editor.name AS editor,
             GROUP_CONCAT(DISTINCT company_developer.name SEPARATOR " - ") AS developer,
             GROUP_CONCAT(DISTINCT platform.name SEPARATOR " - ") AS platforms,
-            COUNT(review.game_id) AS counterRecommandation
+            COUNT(DISTINCT review.game_id) AS counterRecommandation
         FROM game
             LEFT JOIN review ON game.id = review.game_id AND review.is_recommanded = 1
             LEFT JOIN game_genre ON game.id = game_genre.game_id
@@ -79,9 +79,33 @@ function findGame(int $id): ?array
     return $game;
 }
 
+function insertReview(array $review): bool
+{
+    global $db;
+    $query = <<<SQL
+        INSERT INTO review (game_id, user_id, is_recommanded, comment)
+            VALUES (:gameId, :userId, :isRecommanded, :comment);
+    SQL;
+
+    $stmt = $db->prepare($query);
+    $stmt->bindValue('gameId', $review['gameId'], PDO::PARAM_INT);
+    $stmt->bindValue('userId', $review['userId'], PDO::PARAM_INT);
+    $stmt->bindValue('isRecommanded', $review['isRecommanded'], PDO::PARAM_INT);
+    $stmt->bindValue('comment', $review['comment']);
+
+    try{
+        $stmt->execute();
+        return true;
+    }catch(Exception $e){
+        return false;
+    }
+}
+
 // ----- Utils -----
 function getDefaultGamePoster(): string
 {
     return 'https://www.onlylondon.properties/application/modules/themes/views/default/assets/images/image-placeholder.png';
 }
+
+
 
