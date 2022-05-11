@@ -15,7 +15,7 @@ function findGames(string $order = NULL, int $limit = NULL): array
         SELECT 
             game.id, game.title, game.poster, 
             IFNULL(GROUP_CONCAT(genre.name SEPARATOR " - "), "Non connu") AS genre, 
-            COUNT(DISTINCT review.game_id) AS counterRecommandation 
+            COUNT(DISTINCT review.user_id) AS counterRecommandation 
         FROM game
             LEFT JOIN review ON game.id = review.game_id AND review.is_recommanded = 1
             LEFT JOIN game_genre ON game.id = game_genre.game_id
@@ -54,7 +54,7 @@ function findGame(int $id): ?array
             company_editor.name AS editor,
             GROUP_CONCAT(DISTINCT company_developer.name SEPARATOR " - ") AS developer,
             GROUP_CONCAT(DISTINCT platform.name SEPARATOR " - ") AS platforms,
-            COUNT(DISTINCT review.game_id) AS counterRecommandation
+            COUNT(DISTINCT review.user_id) AS counterRecommandation
         FROM game
             LEFT JOIN review ON game.id = review.game_id AND review.is_recommanded = 1
             LEFT JOIN game_genre ON game.id = game_genre.game_id
@@ -121,6 +121,17 @@ function checkUserReviewedGame(int $gameId, int $userId): bool
     }
 
     return true;
+}
+
+// ----- Flash Messages -----
+function addFlash(string $type, string $message): void
+{
+    // Ajouter le message et son type dans la session
+}
+
+function getAllFlashes(): array
+{
+    // Retourner et nettoyer tous les messages mémoires
 }
 
 // ----- Utils -----

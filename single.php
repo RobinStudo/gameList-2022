@@ -28,6 +28,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         if(!insertReview($review)){
             $errors[] = 'Une erreur inconnue est survenue, veuillez réessayer ultérieurement';
+        }else{
+            addFlash('success', 'Votre commentaire a bien été pris en compte');
+            header('Location: ' . $_SERVER['REQUEST_URI']);
+            die();
         }
     }
 }
@@ -88,7 +92,7 @@ require_once './components/header.php';
 
                 <div class="form-field">
                     <input type="checkbox" name="is_recommanded" id="isRecommandedInput" <?php echo isset($_POST['is_recommanded']) ? 'checked' : '' ?>>
-                    <label for="isRecommandedInput">Recommendez vous ce jeu ?</label>
+                    <label for="isRecommandedInput">Recommandez-vous ce jeu ?</label>
                 </div>
 
                 <div class="form-field">
