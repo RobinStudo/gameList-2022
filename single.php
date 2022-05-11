@@ -25,7 +25,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(count($errors) === 0){
         $review['gameId'] = $game['id'];
         $review['userId'] = 1; // TODO - Récupérer l'ID de l'utilisateur connecté
-        
+
         if(!insertReview($review)){
             $errors[] = 'Une erreur inconnue est survenue, veuillez réessayer ultérieurement';
         }
@@ -76,29 +76,31 @@ require_once './components/header.php';
     </div>
 
     <section>
-        <h2>Laisser votre avis</h2>
+        <?php if(!checkUserReviewedGame($game['id'], 1)){ ?>
+            <h2>Laisser votre avis</h2>
 
-        <form method="post">
-            <ul class="form-errors">
-                <?php foreach($errors as $error){ ?>
-                    <li><?php echo $error; ?></li>
-                <?php } ?>
-            </ul>
+            <form method="post">
+                <ul class="form-errors">
+                    <?php foreach($errors as $error){ ?>
+                        <li><?php echo $error; ?></li>
+                    <?php } ?>
+                </ul>
 
-            <div class="form-field">
-                <input type="checkbox" name="is_recommanded" id="isRecommandedInput">
-                <label for="isRecommandedInput">Recommendez vous ce jeu ?</label>
-            </div>
+                <div class="form-field">
+                    <input type="checkbox" name="is_recommanded" id="isRecommandedInput">
+                    <label for="isRecommandedInput">Recommendez vous ce jeu ?</label>
+                </div>
 
-            <div class="form-field">
-                <label for="commentInput">Votre commentaire</label>
-                <textarea name="comment" id="commentInput" rows="10"></textarea>
-            </div>
+                <div class="form-field">
+                    <label for="commentInput">Votre commentaire</label>
+                    <textarea name="comment" id="commentInput" rows="10"></textarea>
+                </div>
 
-            <div class="form-actions">
-                <button class="button">Publier</button>
-            </div>
-        </form>
+                <div class="form-actions">
+                    <button class="button">Publier</button>
+                </div>
+            </form>
+        <?php } ?>
     </section>
 
 </div>

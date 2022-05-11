@@ -101,6 +101,11 @@ function insertReview(array $review): bool
     }
 }
 
+function checkUserReviewedGame(int $gameId, int $userId): bool
+{
+    
+}
+
 // ----- Utils -----
 function getDefaultGamePoster(): string
 {
