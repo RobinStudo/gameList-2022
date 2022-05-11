@@ -103,7 +103,24 @@ function insertReview(array $review): bool
 
 function checkUserReviewedGame(int $gameId, int $userId): bool
 {
-    
+    global $db;
+    $query = <<<SQL
+        SELECT COUNT(game_id) AS counterReview FROM review 
+        WHERE game_id = :gameId AND user_id = :userId;
+    SQL;
+
+    $stmt = $db->prepare($query);
+    $stmt->bindValue('gameId', $gameId, PDO::PARAM_INT);
+    $stmt->bindValue('userId', $userId, PDO::PARAM_INT);
+
+    $stmt->execute();
+    $result = $stmt->fetchColumn();
+
+    if($result === 0){
+        return false;
+    }
+
+    return true;
 }
 
 // ----- Utils -----

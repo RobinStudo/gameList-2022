@@ -87,13 +87,13 @@ require_once './components/header.php';
                 </ul>
 
                 <div class="form-field">
-                    <input type="checkbox" name="is_recommanded" id="isRecommandedInput">
+                    <input type="checkbox" name="is_recommanded" id="isRecommandedInput" <?php echo isset($_POST['is_recommanded']) ? 'checked' : '' ?>>
                     <label for="isRecommandedInput">Recommendez vous ce jeu ?</label>
                 </div>
 
                 <div class="form-field">
                     <label for="commentInput">Votre commentaire</label>
-                    <textarea name="comment" id="commentInput" rows="10"></textarea>
+                    <textarea name="comment" id="commentInput" rows="10"><?php echo $_POST['comment'] ?? ''; ?></textarea>
                 </div>
 
                 <div class="form-actions">
