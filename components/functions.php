@@ -126,12 +126,21 @@ function checkUserReviewedGame(int $gameId, int $userId): bool
 // ----- Flash Messages -----
 function addFlash(string $type, string $message): void
 {
-    // Ajouter le message et son type dans la session
+    $messages = $_SESSION['messages'] ?? [];
+
+    $messages[] = [
+        'type' => $type,
+        'content' => $message,
+    ];
+
+    $_SESSION['messages'] = $messages;
 }
 
 function getAllFlashes(): array
 {
-    // Retourner et nettoyer tous les messages mémoires
+    $messages = $_SESSION['messages'] ?? [];
+    unset($_SESSION['messages']);
+    return $messages;
 }
 
 // ----- Utils -----
@@ -139,6 +148,4 @@ function getDefaultGamePoster(): string
 {
     return 'https://www.onlylondon.properties/application/modules/themes/views/default/assets/images/image-placeholder.png';
 }
-
-
 

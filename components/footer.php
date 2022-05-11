@@ -5,7 +5,11 @@
         </footer>
 
         <div class="notifications">
-            <!--- Afficher les messages flashs disponible --->
+            <?php foreach (getAllFlashes() as $flash){ ?>
+                <div class="notification notification-<?php echo $flash['type']; ?>">
+                    <?php echo $flash['content']; ?>
+                </div>
+            <?php } ?>
         </div>
     </body>
 </html>

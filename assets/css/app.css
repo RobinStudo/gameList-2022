@@ -6,6 +6,7 @@
     --color-light: #ecf0f1;
     --color-dark: #2c3e50;
     --color-danger: #c0392b;
+    --color-success: #27ae60;
 
     --gradient: linear-gradient(to right, var(--color-primary), var(--color-secondary));
 }
@@ -190,4 +191,27 @@ footer{
     color: var(--color-dark);
     text-align: center;
     padding: 20px;
+}
+
+.notifications{
+    position: fixed;
+    top: 10px;
+    right: 10px;
+
+    max-width: 350px;
+}
+
+.notification{
+    font-size: 1rem;
+    padding: 10px 15px;
+    margin: 20px;
+}
+
+.notification-success{
+    background-color: var(--color-success);
+}
+
+.notification-error{
+    background-color: var(--color-danger);
+    color: var(--color-light);
 }
