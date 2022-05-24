@@ -115,6 +115,67 @@ function insertUser(string $username, string $email, string $password): bool
     }
 }
 
+function insertGameInLibrary(int $gameId, int $userId): bool
+{
+    global $db;
+    $query = <<<SQL
+        INSERT INTO library (game_id, user_id, status)
+            VALUES (:gameId, :userId, 0);
+    SQL;
+
+    $stmt = $db->prepare($query);
+    $stmt->bindValue('gameId', $gameId, PDO::PARAM_INT);
+    $stmt->bindValue('userId', $userId, PDO::PARAM_INT);
+
+    try{
+        $stmt->execute();
+        return true;
+    }catch(Exception $exception){
+        return false;
+    }
+}
+
+function deleteGameInLibrary(int $gameId, int $userId): bool
+{
+    global $db;
+    $query = <<<SQL
+        DELETE FROM library WHERE game_id = :gameId AND user_id = :userId;
+    SQL;
+
+    $stmt = $db->prepare($query);
+    $stmt->bindValue('gameId', $gameId, PDO::PARAM_INT);
+    $stmt->bindValue('userId', $userId, PDO::PARAM_INT);
+
+    try{
+        $stmt->execute();
+        return true;
+    }catch(Exception $exception){
+        return false;
+    }
+}
+
+function checkGameInUserLibrary(int $gameId, int $userId): bool
+{
+    global $db;
+    $query = <<<SQL
+        SELECT COUNT(game_id) AS counterLibrary FROM library 
+        WHERE game_id = :gameId AND user_id = :userId;
+    SQL;
+
+    $stmt = $db->prepare($query);
+    $stmt->bindValue('gameId', $gameId, PDO::PARAM_INT);
+    $stmt->bindValue('userId', $userId, PDO::PARAM_INT);
+
+    $stmt->execute();
+    $result = $stmt->fetchColumn();
+
+    if($result === 0){
+        return false;
+    }
+
+    return true;
+}
+
 function checkUserReviewedGame(int $gameId, int $userId): bool
 {
     global $db;

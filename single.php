@@ -11,26 +11,36 @@ if(!$game){
 
 $errors = [];
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $review = [];
+    $action = $_POST['action'] ?? '';
 
-    $review['isRecommanded'] = isset($_POST['is_recommanded']);
+    if($action === 'publishComment'){
+        $review = [];
 
-    if(strlen($_POST['comment']) > 10 && strlen($_POST['comment']) < 500){
-        $review['comment'] = htmlspecialchars($_POST['comment']);
-    }else{
-        $errors[] = 'Votre commentaire doit contenir entre 10 et 500 caractères';
-    }
+        $review['isRecommanded'] = isset($_POST['is_recommanded']);
 
-    if(count($errors) === 0){
-        $review['gameId'] = $game['id'];
-        $review['userId'] = $connectedUser['id'];
-
-        if(!insertReview($review)){
-            $errors[] = 'Une erreur inconnue est survenue, veuillez réessayer ultérieurement';
+        if(strlen($_POST['comment']) > 10 && strlen($_POST['comment']) < 500){
+            $review['comment'] = htmlspecialchars($_POST['comment']);
         }else{
-            addFlash('success', 'Votre commentaire a bien été pris en compte');
-            header('Location: ' . $_SERVER['REQUEST_URI']);
-            die();
+            $errors[] = 'Votre commentaire doit contenir entre 10 et 500 caractères';
+        }
+
+        if(count($errors) === 0){
+            $review['gameId'] = $game['id'];
+            $review['userId'] = $connectedUser['id'];
+
+            if(!insertReview($review)){
+                $errors[] = 'Une erreur inconnue est survenue, veuillez réessayer ultérieurement';
+            }else{
+                addFlash('success', 'Votre commentaire a bien été pris en compte');
+                header('Location: ' . $_SERVER['REQUEST_URI']);
+                die();
+            }
+        }
+    }else if($action === 'addToLibrary'){
+        if(checkGameInUserLibrary($game['id'], $connectedUser['id'])){
+            deleteGameInLibrary($game['id'], $connectedUser['id']);
+        }else{
+            insertGameInLibrary($game['id'], $connectedUser['id']);
         }
     }
 }
@@ -79,6 +89,15 @@ require_once './components/header.php';
     </div>
 
     <section>
+        <?php if(isLoggedIn()){ ?>
+            <form method="post">
+                <input type="hidden" name="action" value="addToLibrary">
+                <button class="button">Ajouter à ma bibliothéque</button>
+            </form>
+        <?php } ?>
+    </section>
+
+    <section>
         <?php if(isLoggedIn() && !checkUserReviewedGame($game['id'], $connectedUser['id'])){ ?>
             <h2>Laisser votre avis</h2>
 
@@ -100,12 +119,12 @@ require_once './components/header.php';
                 </div>
 
                 <div class="form-actions">
+                    <input type="hidden" name="action" value="publishComment">
                     <button class="button">Publier</button>
                 </div>
             </form>
         <?php } ?>
     </section>
-
 </div>
 
 <?php
