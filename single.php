@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     if(count($errors) === 0){
         $review['gameId'] = $game['id'];
-        $review['userId'] = 1; // TODO - Récupérer l'ID de l'utilisateur connecté
+        $review['userId'] = $connectedUser['id'];
 
         if(!insertReview($review)){
             $errors[] = 'Une erreur inconnue est survenue, veuillez réessayer ultérieurement';
@@ -79,7 +79,7 @@ require_once './components/header.php';
     </div>
 
     <section>
-        <?php if(!checkUserReviewedGame($game['id'], 1)){ ?>
+        <?php if(isLoggedIn() && !checkUserReviewedGame($game['id'], $connectedUser['id'])){ ?>
             <h2>Laisser votre avis</h2>
 
             <form method="post">
