@@ -268,6 +268,12 @@ function login(int $userId): void
     $_SESSION['userId'] = $userId;
 }
 
+function logout(): void
+{
+    $_SESSION['authenticated'] = false;
+    unset($_SESSION['userId']);
+}
+
 function isLoggedIn(): bool
 {
     return isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true;
