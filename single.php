@@ -9,6 +9,10 @@ if(!$game){
     die();
 }
 
+if(isLoggedIn()){
+    $isInUserLibrary = checkGameInUserLibrary($game['id'], $connectedUser['id']);
+}
+
 $errors = [];
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $action = $_POST['action'] ?? '';
@@ -36,8 +40,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 die();
             }
         }
-    }else if($action === 'addToLibrary'){
-        if(checkGameInUserLibrary($game['id'], $connectedUser['id'])){
+    }else if($action === 'libraryManagement'){
+        if($isInUserLibrary){
             deleteGameInLibrary($game['id'], $connectedUser['id']);
         }else{
             insertGameInLibrary($game['id'], $connectedUser['id']);
@@ -91,8 +95,14 @@ require_once './components/header.php';
     <section>
         <?php if(isLoggedIn()){ ?>
             <form method="post">
-                <input type="hidden" name="action" value="addToLibrary">
-                <button class="button">Ajouter à ma bibliothéque</button>
+                <input type="hidden" name="action" value="libraryManagement">
+                <button class="button">
+                    <?php if($isInUserLibrary){ ?>
+                        Retirer de ma bibliothéque
+                    <?php }else{ ?>
+                        Ajouter à ma bibliothéque
+                    <?php } ?>
+                </button>
             </form>
         <?php } ?>
     </section>
