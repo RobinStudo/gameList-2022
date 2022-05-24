@@ -38,8 +38,13 @@
             </nav>
 
             <aside>
-                <a href="#">Connexion</a>
-                <a href="register.php">Inscription</a>
+                <?php if(isLoggedIn()){ ?>
+                    <a href="#"><?php echo $connectedUser['username']; ?></a>
+                    <a href="logout.php">Déconnexion</a>
+                <?php }else{ ?>
+                    <a href="login.php">Connexion</a>
+                    <a href="register.php">Inscription</a>
+                <?php } ?>
             </aside>
         </header>
 

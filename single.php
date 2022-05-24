@@ -1,6 +1,5 @@
 <?php
 require_once './components/data.php';
-require_once './components/functions.php';
 
 $id = (int) $_GET['id'] ?? 0;
 

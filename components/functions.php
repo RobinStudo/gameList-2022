@@ -158,6 +158,44 @@ function checkExistingUserEmail(string $email): bool
     return true;
 }
 
+function findUserByEmail(string $email): ?array
+{
+    global $db;
+    $query = <<<SQL
+        SELECT * FROM user WHERE email = :email;
+    SQL;
+
+    $stmt = $db->prepare($query);
+    $stmt->bindValue('email', $email);
+    $stmt->execute();
+
+    $user = $stmt->fetch();
+    if($user === false){
+        return null;
+    }
+
+    return $user;
+}
+
+function findUserById(int $id): ?array
+{
+    global $db;
+    $query = <<<SQL
+        SELECT * FROM user WHERE id = :id;
+    SQL;
+
+    $stmt = $db->prepare($query);
+    $stmt->bindValue('id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $user = $stmt->fetch();
+    if($user === false){
+        return null;
+    }
+
+    return $user;
+}
+
 // ----- Flash Messages -----
 function addFlash(string $type, string $message): void
 {
@@ -221,6 +259,27 @@ function checkRegisterData(string $username, string $email, string $password, bo
     }
 
     return $errors;
+}
+
+// ----- Security -----
+function login(int $userId): void
+{
+    $_SESSION['authenticated'] = true;
+    $_SESSION['userId'] = $userId;
+}
+
+function isLoggedIn(): bool
+{
+    return isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true;
+}
+
+function reloadUserFormDatabase(): ?array
+{
+    if(empty($_SESSION['userId'])){
+        return null;
+    }
+
+    return findUserById($_SESSION['userId']);
 }
 
 // ----- Utils -----
