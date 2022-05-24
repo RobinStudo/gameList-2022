@@ -94,6 +94,27 @@ function insertReview(array $review): bool
     }
 }
 
+function insertUser(string $username, string $email, string $password): bool
+{
+    global $db;
+    $query = <<<SQL
+        INSERT INTO user (username, email, password, roles, created_at)
+            VALUES (:username, :email, :password, '[]', NOW());
+    SQL;
+
+    $stmt = $db->prepare($query);
+    $stmt->bindValue('username', $username);
+    $stmt->bindValue('email', $email);
+    $stmt->bindValue('password', $password);
+
+    try{
+        $stmt->execute();
+        return true;
+    }catch(Exception $exception){
+        return false;
+    }
+}
+
 function checkUserReviewedGame(int $gameId, int $userId): bool
 {
     global $db;
@@ -105,6 +126,27 @@ function checkUserReviewedGame(int $gameId, int $userId): bool
     $stmt = $db->prepare($query);
     $stmt->bindValue('gameId', $gameId, PDO::PARAM_INT);
     $stmt->bindValue('userId', $userId, PDO::PARAM_INT);
+
+    $stmt->execute();
+    $result = $stmt->fetchColumn();
+
+    if($result === 0){
+        return false;
+    }
+
+    return true;
+}
+
+function checkExistingUserEmail(string $email): bool
+{
+    global $db;
+    $query = <<<SQL
+        SELECT COUNT(email) AS counterEmail FROM user 
+        WHERE email = :email;
+    SQL;
+
+    $stmt = $db->prepare($query);
+    $stmt->bindValue('email', $email);
 
     $stmt->execute();
     $result = $stmt->fetchColumn();
@@ -137,11 +179,46 @@ function getAllFlashes(): array
 }
 
 // ----- Form -----
-function checkRegisterData($username, $email, $password, $cgu): array
+function checkRegisterData(string $username, string $email, string $password, bool $cgu): array
 {
     $errors = [];
 
-    // Contrôler les valeurs    
+    // Check username
+    if(strlen($username) < 3){
+        $errors[] = 'Votre nom d\'utilisateur doit contenir au moins 3 caractères';
+    }else if(strlen($username) > 24){
+        $errors[] = 'Votre nom d\'utilisateur doit contenir au maximum 24 caractères';
+    }
+
+    if(!ctype_alnum($username)){
+        $errors[] = 'Votre nom d\'utilisateur doit contenir uniquement des caractères alphanumériques';
+    }
+
+    // Check email
+    if(empty($email)){
+        $errors[] = 'Vous devez saisir votre adresse e-mail';
+    }else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $errors[] = 'Vous devez saisir une adresse e-mail valide';
+    }else if(checkExistingUserEmail($email)){
+        $errors[] = 'Cette adresse e-mail est déjà utilisée';
+    }
+
+    // Check password
+    if(strlen($password) < 8){
+        $errors[] = 'Votre mot de passe doit contenir au moins 8 caractères';
+    }else if(strlen($password) > 30){
+        $errors[] = 'Votre mot de passe doit contenir au maximum 30 caractères';
+    }
+
+    $regex = '/(?=.{0,}[a-z])(?=.{0,}[^a-zA-Z0-9])(?=.{0,}\d)/';
+    if(preg_match($regex, $password) === 0){
+        $errors[] = 'Votre mot de passe doit contenir au moins un chiffre, une lettre et un caractère spécial';
+    }
+
+    // Check CGU
+    if($cgu === false){
+        $errors[] = 'Vous devez accepter nos CGU';
+    }
 
     return $errors;
 }
