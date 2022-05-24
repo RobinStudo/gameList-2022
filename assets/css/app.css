@@ -129,6 +129,7 @@ main{
     font-size: 1.2rem;
     background-color: var(--color-primary);
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .form-errors{
@@ -152,7 +153,8 @@ main{
     font-size: 1.2rem;
 }
 
-.form-field input[type="text"], .form-field textarea{
+.form-field input[type="text"], .form-field input[type="password"],
+.form-field input[type="email"], .form-field textarea{
     border: none;
     padding: 10px;
     width: 100%;

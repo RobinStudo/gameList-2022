@@ -1,11 +1,4 @@
 <?php
-// TODO - A supprimer après la refonte de la page
-function average(array $array, int $precision = 1): float
-{
-    $avg = array_sum($array) / count($array);
-    return round($avg, $precision);
-}
-
 // ----- Database Quieres -----
 function findGames(string $order = NULL, int $limit = NULL): array
 {
@@ -141,6 +134,16 @@ function getAllFlashes(): array
     $messages = $_SESSION['messages'] ?? [];
     unset($_SESSION['messages']);
     return $messages;
+}
+
+// ----- Form -----
+function checkRegisterData($username, $email, $password, $cgu): array
+{
+    $errors = [];
+
+    // Contrôler les valeurs    
+
+    return $errors;
 }
 
 // ----- Utils -----

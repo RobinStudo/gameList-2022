@@ -13,6 +13,7 @@
 
         <link rel="stylesheet" href="assets/css/pages/index.css">
         <link rel="stylesheet" href="assets/css/pages/single.css">
+        <link rel="stylesheet" href="assets/css/pages/register.css">
     </head>
     <body>
         <header>
@@ -38,7 +39,7 @@
 
             <aside>
                 <a href="#">Connexion</a>
-                <a href="#">Inscription</a>
+                <a href="register.php">Inscription</a>
             </aside>
         </header>
 
