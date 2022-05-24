@@ -17,7 +17,7 @@
     </head>
     <body>
         <header>
-            <a href="/" class="logo">
+            <a href="index.php" class="logo">
                 <i class="fa-solid fa-gamepad"></i>
                 GameList
             </a>
@@ -25,7 +25,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="/library.php">
+                        <a href="library.php">
                             Bibliothéque
                         </a>
                     </li>

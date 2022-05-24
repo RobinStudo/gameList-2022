@@ -34,7 +34,7 @@ require_once './components/header.php';
 
     <div class="auto-grid">
         <?php foreach(findGames('recommandation', 3) as $game){ ?>
-            <a href="/single.php?id=<?php echo $game['id']; ?>" class="card">
+            <a href="single.php?id=<?php echo $game['id']; ?>" class="card">
                 <?php if($game['counterRecommandation'] >= 1){ ?>
                     <div class="card-badge">
                         <i class="fas fa-thumbs-up"></i>
