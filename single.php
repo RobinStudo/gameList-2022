@@ -46,6 +46,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         }else{
             insertGameInLibrary($game['id'], $connectedUser['id']);
         }
+
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        die();
     }
 }
 
