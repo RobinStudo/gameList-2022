@@ -201,12 +201,19 @@ footer{
     right: 10px;
 
     max-width: 350px;
+    pointer-events: none;
 }
 
 .notification{
     font-size: 1rem;
     padding: 10px 15px;
     margin: 20px;
+
+    animation-name: hideNotification;
+    animation-delay: 4s;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
 }
 
 .notification-success{
@@ -216,4 +223,13 @@ footer{
 .notification-error{
     background-color: var(--color-danger);
     color: var(--color-light);
+}
+
+@keyframes hideNotification {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
 }
