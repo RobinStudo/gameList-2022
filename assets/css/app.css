@@ -225,6 +225,13 @@ footer{
     color: var(--color-light);
 }
 
+.user-picture{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 @keyframes hideNotification {
     0%{
         opacity: 1;

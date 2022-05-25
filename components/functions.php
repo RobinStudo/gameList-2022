@@ -355,3 +355,22 @@ function getDefaultGamePoster(): string
     return 'https://www.onlylondon.properties/application/modules/themes/views/default/assets/images/image-placeholder.png';
 }
 
+function buildUserPictureName(array $user): string
+{
+    return md5($user['id'] . '_' . $user['username']);
+}
+
+function getUserPicture(array $user): string
+{
+    $name = buildUserPictureName($user);
+    $files = scandir('uploads');
+
+    foreach ($files as $file){
+        if(strstr($file, $name) !== false){
+            return 'uploads/' . $file;
+        }
+    }
+
+    return 'assets/images/default-user-picture.png';
+}
+
