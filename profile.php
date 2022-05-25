@@ -10,6 +10,11 @@ if(isset($_FILES['picture'])){
 
             $allowedMimeTypes = ['image/jpeg', 'image/png'];
             if(in_array($_FILES['picture']['type'], $allowedMimeTypes)){
+                $oldPicture = getUserPicture($connectedUser, false);
+                if($oldPicture !== null){
+                    unlink($oldPicture);
+                }
+
                 $explodedName = explode('.', $_FILES['picture']['name']);
                 $fileExt = strtolower(end($explodedName));
 
@@ -18,7 +23,7 @@ if(isset($_FILES['picture'])){
 
                 move_uploaded_file($_FILES['picture']['tmp_name'], $path);
                 addFlash('success', 'Votre image a bien été téléchargée');
-                header('Location :' . $_SERVER['REQUEST_URI']);
+                header('Location: ' . $_SERVER['REQUEST_URI']);
                 die();
             }else{
                 $error = 'Votre image doit être au format jpeg ou png';
@@ -39,6 +44,12 @@ if(isset($_FILES['picture'])){
 <h1>Mon profil</h1>
 
 <form method="post" enctype="multipart/form-data">
+    <?php if(!empty($error)){ ?>
+        <ul class="form-errors">
+            <li><?php echo $error; ?></li>
+        </ul>
+    <?php } ?>
+
     <div class="form-field">
         <label for="picture">
             <img src="<?php echo getUserPicture($connectedUser); ?>"
@@ -53,10 +64,4 @@ if(isset($_FILES['picture'])){
 
 <?php
 require_once './components/footer.php';
-
-// Profile Picture
-// Add column in MySQL - OK
-// Setup fallback pp - OK
-// Add form to upload picture - with security checks - OK
-// Delete profile picture
 ?>

@@ -360,7 +360,7 @@ function buildUserPictureName(array $user): string
     return md5($user['id'] . '_' . $user['username']);
 }
 
-function getUserPicture(array $user): string
+function getUserPicture(array $user, bool $withDefault = true): ?string
 {
     $name = buildUserPictureName($user);
     $files = scandir('uploads');
@@ -371,6 +371,10 @@ function getUserPicture(array $user): string
         }
     }
 
-    return 'assets/images/default-user-picture.png';
+    if($withDefault){
+        return 'assets/images/default-user-picture.png';
+    }
+
+    return null;
 }
 
